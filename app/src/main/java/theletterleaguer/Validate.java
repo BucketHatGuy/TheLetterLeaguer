@@ -72,6 +72,6 @@ public class Validate {
                 System.out.println("please don't try and break this");
             }
         }
-        return letters;
+        return letters.toLowerCase();
     }
 }
