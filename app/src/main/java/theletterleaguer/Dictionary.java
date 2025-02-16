@@ -73,7 +73,7 @@ public class Dictionary
             }
         } catch (FileNotFoundException e) {
             // Handle the exception
-            System.out.println("that probably isn't a word lol, try again");
+            System.out.println("That is not a word.");
             return null;
         } catch (Exception e) {
             // Handle other exceptions

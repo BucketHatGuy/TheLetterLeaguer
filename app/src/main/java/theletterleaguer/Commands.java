@@ -37,7 +37,7 @@ public class Commands extends ListenerAdapter{
 
             // tells the user to not break this if they entered too many letters or non-letters
             if(!(eightOrLessCheck && onlyLettersCheck)){
-                event.getHook().sendMessage("your letters don't meet the criteria, please try again").queue();
+                event.getHook().sendMessage("Your letters don't meet the criteria, please try again.").queue();
                 return;
             }
                 Validate.letterCombos(letters, "");
@@ -47,11 +47,11 @@ public class Commands extends ListenerAdapter{
                 if(listWithoutDuplicates.size() <= 200){
                     event.getHook().sendMessage("These are your words:\n\n **" + listWithoutDuplicates + "**").queue();
                 } else {
-                    event.getHook().sendMessage("We did it, but there's a fuck ton of words lol").queue();
+                    event.getHook().sendMessage("Too many words to output. Please try another set of letters.").queue();
                 }
                 Validate.validWords.clear();
             } else {
-                event.getHook().sendMessage("your letters don't meet the criteria, please try again").queue();
+                event.getHook().sendMessage("Your letters don't meet the criteria. Please try again.").queue();
             }
         } else if(event.getName().equals("define")){
             event.deferReply().queue();
@@ -59,7 +59,7 @@ public class Commands extends ListenerAdapter{
             OptionMapping wordReal = event.getOption("word");
 
             if(wordReal == null){
-                event.getHook().sendMessage("your word gave an error, please try again").queue();
+                event.getHook().sendMessage("Your word gave an error. Please try again.").queue();
                 return;
             }
 
@@ -71,7 +71,7 @@ public class Commands extends ListenerAdapter{
                 if(list != null){
                     event.getHook().sendMessage("The word " + list[0] + " means: \n\n**" + list[1] + "**").queue();
                 } else {
-                    event.getHook().sendMessage("That is probably not a word lol. Try looking it up on urban dictionary maybe?").queue();
+                    event.getHook().sendMessage("That word doesn't have a definition.").queue();
                 }
             } catch (Exception e) {
                 event.getHook().sendMessage("An unexpected error occured.").queue();

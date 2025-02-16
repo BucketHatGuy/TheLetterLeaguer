@@ -54,7 +54,7 @@ public class Validate {
 
         // tells the user to not break this if they entered too many letters or non-letters
         if(!(eightOrLessCheck && onlyLettersCheck)){
-            System.out.println("please don't try and break this");
+            System.out.println("Letters don't meet criteria. Please try again.");
             return null;
         } else {
             return letters.toLowerCase();
