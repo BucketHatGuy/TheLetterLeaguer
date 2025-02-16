@@ -1,6 +1,11 @@
 package theletterleaguer;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,7 +17,7 @@ public class Dictionary
 {
     private static Set<String> wordsSet;
 
-    public static void dictionary() throws IOException
+    public static void dictionarySetup() throws IOException
     {
         // gets the path to the file "words.txt"
         Path path = Paths.get("words.txt");
@@ -37,5 +42,40 @@ public class Dictionary
     {
         //returns a boolean depending on if the word given is contained in the set using the contains() method. 
         return wordsSet.contains(word);
+    }
+
+    public static void findDefinition(String word) throws Exception {
+        // Replace <word> with the actual word you want to look up
+        String apiUrl = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
+        Integer defBegin = 0;
+        Integer defEnd = 0;
+        String definition = "";
+
+        try{
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                defBegin = (response.indexOf("definition\":")) + 12;
+                defEnd = response.indexOf(",\"synonyms");
+                definition = response.substring(defBegin, defEnd);
+
+                System.out.println("The definition of " + word + " is: " + definition);
+            } finally {
+                connection.disconnect();
+            }
+        } catch (FileNotFoundException e) {
+            // Handle the exception
+            System.out.println("that probably isn't a word lol, try again");
+        } catch (Exception e) {
+            // Handle other exceptions
+            System.out.println("An error occurred: " + e.getMessage());
+        }
     }
 }
