@@ -44,7 +44,7 @@ public class Dictionary
         return wordsSet.contains(word);
     }
 
-    public static void findDefinition(String word) throws Exception {
+    public static String[] findDefinition(String word) throws Exception {
         // Replace <word> with the actual word you want to look up
         String apiUrl = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
         Integer defBegin = 0;
@@ -66,16 +66,19 @@ public class Dictionary
                 defEnd = response.indexOf(",\"synonyms");
                 definition = response.substring(defBegin, defEnd);
 
-                System.out.println("The definition of " + word + " is: " + definition);
+                String[] listToReturn = new String[]{word, definition};
+                return listToReturn;
             } finally {
                 connection.disconnect();
             }
         } catch (FileNotFoundException e) {
             // Handle the exception
             System.out.println("that probably isn't a word lol, try again");
+            return null;
         } catch (Exception e) {
             // Handle other exceptions
             System.out.println("An error occurred: " + e.getMessage());
+            return null;
         }
     }
 }
