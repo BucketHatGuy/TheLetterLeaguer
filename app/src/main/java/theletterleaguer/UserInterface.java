@@ -18,6 +18,7 @@ public class UserInterface {
         }
 
         JDA jda = (JDA) JDABuilder.createDefault("")
+            .enableIntents(GatewayIntent.MESSAGE_CONTENT)
             .setActivity(Activity.watching("from inside your walls"))
             .addEventListeners(new Commands())
             .build().awaitReady();

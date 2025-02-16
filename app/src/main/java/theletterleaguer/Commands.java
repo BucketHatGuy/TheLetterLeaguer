@@ -3,6 +3,7 @@ package theletterleaguer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -12,6 +13,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 public class Commands extends ListenerAdapter{
     static HashSet<String> setWithoutDuplicates;
     static List<String> listWithoutDuplicates;
+    static Random rand = new Random();
 
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event){
@@ -35,7 +37,7 @@ public class Commands extends ListenerAdapter{
 
             // tells the user to not break this if they entered too many letters or non-letters
             if(!(eightOrLessCheck && onlyLettersCheck)){
-                event.getHook().sendMessage("your letters don't meet the criteria, please try again").setEphemeral(true).queue();
+                event.getHook().sendMessage("your letters don't meet the criteria, please try again").queue();
                 return;
             }
                 Validate.letterCombos(letters, "");
@@ -43,13 +45,13 @@ public class Commands extends ListenerAdapter{
                 listWithoutDuplicates = new ArrayList<>(setWithoutDuplicates);
 
                 if(listWithoutDuplicates.size() <= 200){
-                    event.getHook().sendMessage("These are your words:\n\n **" + listWithoutDuplicates + "**").setEphemeral(true).queue();
+                    event.getHook().sendMessage("These are your words:\n\n **" + listWithoutDuplicates + "**").queue();
                 } else {
-                    event.getHook().sendMessage("We did it, but there's a fuck ton of words lol").setEphemeral(true).queue();
+                    event.getHook().sendMessage("We did it, but there's a fuck ton of words lol").queue();
                 }
                 Validate.validWords.clear();
             } else {
-                event.getHook().sendMessage("your letters don't meet the criteria, please try again").setEphemeral(true).queue();
+                event.getHook().sendMessage("your letters don't meet the criteria, please try again").queue();
             }
         } else if(event.getName().equals("define")){
             event.deferReply().queue();
@@ -57,7 +59,7 @@ public class Commands extends ListenerAdapter{
             OptionMapping wordReal = event.getOption("word");
 
             if(wordReal == null){
-                event.getHook().sendMessage("your word gave an error, please try again").setEphemeral(true).queue();
+                event.getHook().sendMessage("your word gave an error, please try again").queue();
                 return;
             }
 
@@ -67,12 +69,12 @@ public class Commands extends ListenerAdapter{
                 String[] list = Dictionary.findDefinition(word);
 
                 if(list != null){
-                    event.getHook().sendMessage("The word " + list[0] + " means: \n\n**" + list[1] + "**").setEphemeral(true).queue();
+                    event.getHook().sendMessage("The word " + list[0] + " means: \n\n**" + list[1] + "**").queue();
                 } else {
-                    event.getHook().sendMessage("That is probably not a word lol. Try looking it up on urban dictionary maybe?").setEphemeral(true).queue();
+                    event.getHook().sendMessage("That is probably not a word lol. Try looking it up on urban dictionary maybe?").queue();
                 }
             } catch (Exception e) {
-                event.getHook().sendMessage("An unexpected error occured.").setEphemeral(true).queue();
+                event.getHook().sendMessage("An unexpected error occured.").queue();
                 e.printStackTrace();
             }
         }
@@ -82,6 +84,18 @@ public class Commands extends ListenerAdapter{
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getMessage().getContentRaw().equalsIgnoreCase("what")) {
             event.getChannel().sendMessage("https://tenor.com/view/saving-for-later-also-spongebob-melt-haha-gif-25651594").queue();
+
+        } else if (event.getMessage().getContentRaw().equalsIgnoreCase("huh")) {
+            event.getChannel().sendMessage("https://tenor.com/view/cat-huh-meme-gif-27557281").queue();
+
+        } else if (event.getMessage().getContentRaw().equalsIgnoreCase("chat is this real?")) {
+            Integer israel = rand.nextInt(2);
+
+            if(israel == 1){
+                event.getChannel().sendMessage("https://tenor.com/view/this-cant-be-real-kawakami-sadayo-kawakami-sadayo-caption-gif-26529283").queue();
+            } else {
+                event.getChannel().sendMessage("https://tenor.com/view/whitebeard-one-piece-aba-gif-25861590").queue();
+            }
         }
     }
 }
