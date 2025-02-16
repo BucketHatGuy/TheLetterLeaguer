@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.*;
 
 public class UserInterface {
     static Scanner scanner = new Scanner(System.in);
@@ -89,11 +89,13 @@ public class UserInterface {
             e.printStackTrace();
         }
 
-        /*
-        JDA bot = (JDA) JDABuilder.createDefault("")
+        JDA jda = (JDA) JDABuilder.createDefault("")
             .setActivity(Activity.watching("from inside your walls"))
+            .addEventListeners(new Commands())
             .build();
-        */
+
+        jda.upsertCommand("fart","farted").queue();
+
         userInterface();
     }
 }
